@@ -18,27 +18,22 @@ The system abandons the traditional monolithic approach in favor of five indepen
 ### 2.1 High-Level Architecture Diagram
 ```mermaid
 graph TD
-    classDef external fill:#f9d0c4,stroke:#333,stroke-width:2px;
-    classDef service fill:#d4e6f1,stroke:#2874a6,stroke-width:2px;
-    classDef broker fill:#d5f5e3,stroke:#239b56,stroke-width:2px;
-    classDef db fill:#fcf3cf,stroke:#b7950b,stroke-width:2px;
-
     subgraph APIs [External Threat Intel APIs]
-        AIPDB[AbuseIPDB API]:::external
-        AVOTX[AlienVault OTX]:::external
+        AIPDB[AbuseIPDB API]
+        AVOTX[AlienVault OTX]
     end
 
     subgraph Services [Spring Boot Microservices]
-        IS[Ingestion Service]:::service
-        ES[Extraction Service]:::service
-        PS[Processing Service]:::service
-        RS[Ranking Service]:::service
-        QS[Query Service]:::service
+        IS[Ingestion Service]
+        ES[Extraction Service]
+        PS[Processing Service]
+        RS[Ranking Service]
+        QS[Query Service]
     end
 
     subgraph Infrastructure [Infrastructure Layer]
-        Kafka((Apache Kafka Broker)):::broker
-        DB[(MySQL Database)]:::db
+        Kafka((Apache Kafka Broker))
+        DB[(MySQL Database)]
     end
 
     AIPDB -.->|Scheduled Fetch| IS
