@@ -39,4 +39,25 @@ public class QueryController {
 
         return "Total: " + total + " | Malicious: " + malicious + " | Safe: " + safe;
     }
+
+    @GetMapping("/update-all")
+    public String updatePendingIOCs() {
+        List<IOCEntity> pending = iocRepository.findAll();
+        int count = 0;
+        for (IOCEntity ioc : pending) {
+            if (ioc.getStatus() == null || "PENDING".equals(ioc.getStatus())) {
+                // Mock logic for presentation
+                if (ioc.getValue().startsWith("1.") || ioc.getValue().contains("malware")) {
+                    ioc.setSeverityScore(85.0);
+                    ioc.setStatus("MALICIOUS");
+                } else {
+                    ioc.setSeverityScore(20.0);
+                    ioc.setStatus("SAFE");
+                }
+                iocRepository.save(ioc);
+                count++;
+            }
+        }
+        return "Updated " + count + " PENDING IOCs successfully!";
+    }
 }
